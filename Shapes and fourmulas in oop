@@ -173,8 +173,8 @@ class Pyramid(Shape):
             self.height ** 2 + (self.base_length / 2) ** 2
         )
         base_area = self.base_length * self.base_width
-        length_faces_area = self.base_length * length_slant_height
-        width_faces_area = self.base_width * width_slant_height
+        length_faces_area = 0.5 * self.base_length * length_slant_height
+        width_faces_area = 0.5 * self.base_width * width_slant_height
         return base_area + length_faces_area + width_faces_area
 
     def calculate_measurements(self):
@@ -205,9 +205,10 @@ class Cone(Shape):
             "volume": self.calculate_volume(),
         }
 
+
 class ShapeCollection:
     def __init__(self):
-        self.shape = []
+        self.shapes = []
 
     def add_shape(self):
         choice = input(
@@ -266,19 +267,19 @@ class ShapeCollection:
                 height = float(input("Height: "))
                 shape = Cone(name, diameter, height)
 
-        except ValueError as error:
+        except (TypeError, ValueError) as error:
             print(f"Could not add shape: {error}")
             return
 
-        self.shape.append(shape)
+        self.shapes.append(shape)
         print(f"Added {name}.")
 
     def use_shape(self):
-        if not self.shape:
+        if not self.shapes:
             print("There are no shapes yet.")
             return
 
-        for number, shape in enumerate(self.shape, start=1):
+        for number, shape in enumerate(self.shapes, start=1):
             print(f"{number}. {shape.name}")
 
         try:
@@ -287,11 +288,11 @@ class ShapeCollection:
             print("Enter a valid number.")
             return
 
-        if number < 1 or number > len(self.shape):
+        if number < 1 or number > len(self.shapes):
             print("That shape number doesn't exist.")
             return
 
-        selected_shape = self.shape[number - 1]
+        selected_shape = self.shapes[number - 1]
         print("1. Show measurements")
         print("2. Draw")
         action = input("Choose an action: ").strip()
