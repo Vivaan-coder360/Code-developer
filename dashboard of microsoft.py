@@ -1,21 +1,35 @@
-
-#Message to microssoft if info is incorrect I am sorry I did not reasearch
-
 import matplotlib.pyplot as plt
-years = [1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025 ]
-popularity = [0, 10000000, 3000000, 21000000, 1000000000, 1500000000, 2000000000, 2500000000, 3000000000]
-comparitive_os = ["windows", "macos", "lunix", "other"]
-users = [3000000000, 100000000, 50000000, 300000000]
-figs, axs = plt.subplots(1, 3, figsize = (15, 5))
-axs[0].bar(years, popularity, width=5)
-axs[0].set_title("Popularity of Microsoft over the years", fontsize=16)
-axs[0].set_xlabel("years")
-axs[0].set_ylabel("users")
-axs[1].plot(years, popularity, color="blue", marker='o')
-axs[1].set_title("Popularity growth", fontsize=16)
-axs[1].set_xlabel("years")
-axs[1].set_ylabel("users")
-axs[2].pie(users, labels=comparitive_os, autopct="%.2f%%")
-axs[2].set_title("Global internet users using os", fontsize=16)
-plt.suptitle("Microsoft popularity history", fontsize=18, fontweight='bold')
+
+years = [2019, 2020, 2021, 2022, 2023, 2024]
+revenue_billions = [125.8, 143.0, 168.1, 198.3, 211.9, 245.1]
+revenue_growth = []
+
+for index in range(1, len(revenue_billions)):
+    growth = ((revenue_billions[index] - revenue_billions[index - 1]) / revenue_billions[index - 1]) * 100
+    revenue_growth.append(round(growth, 1))
+
+revenue_growth_labels = ["2020", "2021", "2022", "2023", "2024"]
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+ax1.bar(years, revenue_billions, color="#4f81bd")
+ax1.set_title("Microsoft annual revenue (official annual reports)", fontsize=14)
+ax1.set_xlabel("Fiscal year")
+ax1.set_ylabel("Revenue (USD billions)")
+ax1.grid(axis="y", linestyle="--", alpha=0.3)
+
+for year, value in zip(years, revenue_billions):
+    ax1.text(year, value + 4, f"{value}", ha="center", va="bottom", fontsize=9)
+
+ax2.plot(revenue_growth_labels, revenue_growth, marker="o", color="#c0504d", linewidth=2)
+ax2.set_title("Year-over-year revenue growth", fontsize=14)
+ax2.set_xlabel("Year")
+ax2.set_ylabel("Growth (%)")
+ax2.grid(axis="y", linestyle="--", alpha=0.3)
+
+for label, value in zip(revenue_growth_labels, revenue_growth):
+    ax2.text(label, value + 0.5, f"{value}%", ha="center", va="bottom", fontsize=9)
+
+plt.suptitle("Microsoft revenue dashboard", fontsize=18, fontweight="bold")
+plt.tight_layout()
 plt.show()
