@@ -1,3 +1,5 @@
+#I have quit game development now this was my last gaming project
+
 import pygame
 import sys
 
